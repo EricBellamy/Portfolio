@@ -1,3 +1,7 @@
+#professional {
+	height: 100%;
+	color: #fff;
+}
 #tipsy-vp {
 	background: #D6BC7A;
 }
@@ -12,4 +16,44 @@
 }
 #tipsy-exclusive {
 	background: #111111;
+}
+
+#professional .content {
+	width: 100%;
+	padding: 0 2rem;
+}
+#professional .right {
+	font-size: 24px;
+}
+#professional .right .date {
+	opacity: 0.6;
+}
+#professional .right .title {
+	font-size: 48px;
+	font-weight: 700;
+}
+#professional .right .description {
+	line-height: 1.5;
+}
+#professional .right .role {
+	font-weight: 700;
+	margin-top: 2rem;
+	letter-spacing: 0.05em;
+}
+#professional .right .social-icons {
+	margin-top: 1rem;
+}
+#professional .icon {
+	height: 32px;
+}
+
+#professional .details div {
+	margin-top: 1rem;
+	background: #fff;
+	color: #111;
+	padding: 0.5rem 2rem;
+	display: inline-block;
+	font-size: 16px;
+	letter-spacing: 0.05em;
+	cursor: pointer;
 }

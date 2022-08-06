@@ -1,0 +1,9 @@
+.social-icons img {
+	height: 100%;
+}
+.social-icons .icon {
+	margin-right: 1rem;
+}
+.social-icons > .icon:last-child {
+	margin-right: 0;
+}
