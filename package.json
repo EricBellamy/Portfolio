@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "clean-css": "^5.3.1",
+    "fs-extra": "^10.1.0",
+    "light-server": "^2.9.1",
+    "node-html-parser": "^5.3.3",
+    "terser": "^5.14.2"
+  },
+  "name": "portfolio",
+  "version": "1.0.0",
+  "main": "compile.js",
+  "devDependencies": {},
+  "scripts": {
+	"start": "nodemon -e js,html --ignore dist/* compile.js & light-server -s dist -w dist/*.html"
+  },
+  "author": "Eric Bellamy",
+  "license": "ISC",
+  "description": "Portfolio 2022",
+  "nodemonConfig": {
+    "ignore": ["dist/*"],
+    "delay": 500
+  }
+}
