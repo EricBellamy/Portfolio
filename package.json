@@ -11,7 +11,7 @@
   "main": "compile.js",
   "devDependencies": {},
   "scripts": {
-	"start": "nodemon -e js,html --ignore dist/* compile.js & light-server -s dist -w dist/*.html"
+	"start": "nodemon -e js,html,css --ignore dist/* compile.js & light-server -s dist -w dist/*.html"
   },
   "author": "Eric Bellamy",
   "license": "ISC",
