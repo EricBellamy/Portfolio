@@ -1,6 +1,9 @@
 <div class="abs-center content">
 	<div class="left">
-		<img src="icons/{{img}}" />
+		<picture>
+			<source srcset="icons/{{img}}.webp" type="image/webp">
+			<img src="icons/{{img}}.png" alt="{{img}} logo" width="256" height="256" />
+		</picture>
 	</div>
 	<div class="right">
 		<div class="date">{{date}}</div>
