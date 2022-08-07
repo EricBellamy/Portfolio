@@ -8,63 +8,17 @@
 		<include src="global.css" />
 		<include src="handy.css" />
 		<include src="import/social-icons.css" />
-
-
-		<!-- Sectional CSS -->
-		<include src="intro.css" />
-		<include src="professional.css" />
 	</head>
 	<body>
 		<div id="intro" class="fullscreen">
-			<div id="quote" class="titleish">
-				<div class="line-1">I'm just a really</div><br />
-				<div class="line-2">persistent dumb person.</div>				
-			</div>
+			<include src="intro.html" />
 		</div>
 		<div id="professional">
-			<div id="tipsy-vp" class="fullscreen">
-				<include src="import/professional.html" 
-				date="2021 - Present"
-				title="Tipsy Bartender"
-				description="Taking over tipsy was an unexpected dream. It's been an interesting journey in learning how to manage a website revolving around search traffic."
-				role="Tech Lead / VP of Digital Operations"
-				/>
-			</div>
-			<div id="tipsy-contract" class="fullscreen">
-				<include src="import/professional.html" 
-				date="2019 - 2021"
-				title="Tipsy Bartender"
-				description="Upgrading & managing the website, dev tools and infrastructure. I was brought on to help speed up general development."
-				role="Contract Developer"
-				/>
-			</div>
-			<div id="fbe-superfam" class="fullscreen">
-				<include src="import/professional.html" 
-				date="2020"
-				title="FBE Superfam"
-				description="A patreon like tiered subscription service created for the React social media group. "
-				role="Lead Developer"
-				/>
-			</div>
-			<div id="oscarakermo" class="fullscreen">
-				<include src="import/professional.html" 
-				date="2020"
-				title="Oscar Akermo"
-				description="Sales pages built for a tattoo course. An analytics heavy project aiming to create an optimal sales funnel for a facebook ads traffic source."
-				role="Lead Developer"
-				/>
-			</div>
-			<div id="tipsy-exclusive" class="fullscreen">
-				<include src="import/professional.html" 
-				date="2020"
-				title="Tipsy Exclusive"
-				description="A bartending course product spanning from checkout pages to video hosting."
-				role="Lead Developer"
-				/>
-			</div>
+			<include src="professional.html" />
 		</div>
 		<div id="personal">
 			<!-- Basic list of individual projects -->
+			<include src="personal.html" />
 		</div>
 	</body>
 </html>
