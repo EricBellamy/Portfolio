@@ -1,19 +1,19 @@
 const LOAD_RESOURCES = {
 	"scripts": [
 		"./js/library/game/GameLoop.js",
-		"./js/library/drag/main.js",
+        "./js/library/drag/main.js",
 		"./js/library/keyboard/main.js",
-
+		
 		"./js/library/tired/debounce.js",
 		"./js/library/tired/resize.js",
-
+        
 		"./js/library/webgl/camera/Viewport.js",
-		"./js/library/webgl/draw/chunk.js",
+        "./js/library/webgl/draw/chunk.js",
 		"./js/library/webgl/draw/pixel.js",
-		"./js/library/webgl/math/matrix.js",
+        "./js/library/webgl/math/matrix.js",
 		"./js/library/webgl/math/graphics.js",
-		"./js/library/webgl/render/color.js",
-		"./js/library/webgl/render/culling.js",
+        "./js/library/webgl/render/color.js",
+        "./js/library/webgl/render/culling.js",
 		"./js/library/webgl/render/greedy.js",
 		"./js/library/webgl/render/mesh.js",
 		"./js/library/webgl/render/occlusion.js",
@@ -49,8 +49,8 @@ const LOAD_RESOURCES = {
 
 	// ],
 	"icons": [
-		// 	"./assets/icons/emerald.svg",
-		// 	"./assets/icons/upgrade.svg"
+	// 	"./assets/icons/emerald.svg",
+	// 	"./assets/icons/upgrade.svg"
 	],
 }
 const LOAD_RESOURCE_COLORS = {

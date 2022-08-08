@@ -45,15 +45,15 @@ class LoadingGrid {
 					case "styling":
 						tired.load(TARGET_RESOURCE, {
 							callback: function (color, result) {
-								if (result.status) {
+								if(result.status){
 									GRID_POINTERS[this].className = "grid-item loaded";
 									GRID_POINTERS[this].style.background = `#${color}`;
-
+	
 									delete GRID_POINTERS[this];
-
+	
 									if (Object.keys(GRID_POINTERS).length === 0) {
 										return callback(errors);
-									}
+									}	
 								} else {
 									errors++;
 									delete GRID_POINTERS[this];
