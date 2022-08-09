@@ -1,0 +1,1 @@
+// Takes care of all information related to character models

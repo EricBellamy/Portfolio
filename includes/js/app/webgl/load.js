@@ -58,8 +58,8 @@ window.loaded = async function () {
 
 function immediate(count = 0, maxCount = 1) {
 	tired.load([
-		"./js/defaults/LoadFiles.js",
-		"./js/defaults/LoadingGrid.js"
+		"./js/app/webgl/LoadFiles.js",
+		"./js/app/webgl/LoadingGrid.js"
 	], {
 		callback: function () {
 			window.runStartFunctions("varSetup");

@@ -62,15 +62,31 @@ module.exports = {
 						break;
 					case "js":
 						const jsContents = fs.readFileSync(INPUT_PATH, 'utf8');
-						const jsResult = await minify(jsContents);
 
-						fs.writeFileSync(`dist${noFileTypePath}.js`, jsResult.code);
+						let jsResult;
+						try {
+							jsResult = await minify(jsContents);
+						} catch(err){
+							jsResult = jsContents;
+						}
+
+						// Minified
+						// fs.writeFileSync(`dist${noFileTypePath}.js`, jsResult.code);
+						// Non-Minified
+						fs.writeFileSync(`dist${noFileTypePath}.js`, jsContents);
 						break;
 					case "css":
 						const cssContents = fs.readFileSync(INPUT_PATH, 'utf8');
-						const cssResult = minifyCSS.minify(cssContents);
 
-						fs.writeFileSync(`dist${noFileTypePath}.css`, cssResult.styles);
+						let cssResult;
+						try {
+							cssResult = minifyCSS.minify(cssContents);
+							cssResult = cssResult.styles;
+						} catch(err){
+							cssResult = cssContents;
+						}
+
+						fs.writeFileSync(`dist${noFileTypePath}.css`, cssResult);
 						break;
 					default:
 						// Copy all other files

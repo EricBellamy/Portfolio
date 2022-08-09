@@ -15,7 +15,7 @@
 }
 #personal .app {
 	background: #000;
-	padding-bottom: 56.25%;
+	/* padding-bottom: 56.25%; */
 }
 #personal .app-container .title {
 	margin-top: 2rem;
@@ -25,4 +25,31 @@
 #personal .app-container .description {
 	opacity: 0.6;
 	line-height: 1.5;
+}
+
+
+
+
+
+/* WebGL Canvas Stats */
+.canvas-stats {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    z-index: 30;
+    display: flex;
+}
+.canvas-stats .pointer-lock {
+    margin-right: 1rem;
+}
+.canvas-stats .fps-counter {
+    font-size: 150%;
+}
+
+
+
+#webgl-game {
+	width: 100%;
+	height: 100%;
 }

@@ -29,7 +29,10 @@ const LOAD_SCRIPTS = {
 		const result = await minify(contents);
 		const stats = fs.statSync(filePath);
 
-		LOADED_FILES[FILE_PATH] = [`<script>${result.code}</script>`, stats.mtimeMs];
+		// Minified
+		// LOADED_FILES[FILE_PATH] = [`<script>${result.code}</script>`, stats.mtimeMs];
+		// Non-Minified
+		LOADED_FILES[FILE_PATH] = [`<script>${contents}</script>`, stats.mtimeMs];
 		return LOADED_FILES[FILE_PATH];
 	},
 	html: async function(FILE_PATH){
