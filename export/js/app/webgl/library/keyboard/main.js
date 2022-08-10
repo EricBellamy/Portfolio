@@ -354,7 +354,7 @@ class KeyboardClass {
 	initStyles() {
 		// rows contain 14.5x keys
 		const rowKeyLen = 14.5;
-		const windowWidth = window.innerWidth;
+		const windowWidth = window.videogame.CANVAS_WIDTH;
 
 
 		let horizontalPadding = 20;
@@ -382,7 +382,8 @@ class KeyboardClass {
 		}
 
 		// Check screen width to determine baseWidth
-		this.BASE_WIDTH = Math.min(Math.floor(((windowWidth - horizontalPadding) / rowKeyLen) * 100) / 100, 60);
+		// this.BASE_WIDTH = Math.min(Math.floor(((windowWidth - horizontalPadding) / rowKeyLen) * 100) / 100, 60);
+		this.BASE_WIDTH = windowWidth;
 		const styles = `
 		.hotkey-container {
 			position: fixed;

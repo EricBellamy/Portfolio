@@ -4,8 +4,6 @@ Folders:
 	- "includes" files can be referenced in any html file
 
 todo:
-	- Make webgl app use canvas width instead of window width
-	- Fix fps display
 	- Create WASD / SPACE / SHIFT UI for canvas
 	- Create start renderer button
 	- Pause WebGL render when off screen

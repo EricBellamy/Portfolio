@@ -310,7 +310,7 @@ class ProgramManager {
         this.initShaders(PROGRAM);
         this.linkProgram(PROGRAM);
 
-        const textureWidth = Math.floor((window.innerWidth * RESOLUTION_SCALE) * textureSizeRatio);
+        const textureWidth = Math.floor((window.videogame.CANVAS_WIDTH * RESOLUTION_SCALE) * textureSizeRatio);
         // const textureHeight = Math.floor((window.innerHeight * 0.5) * textureSizeRatio);
 		const textureHeight = textureWidth * 0.5625;
 

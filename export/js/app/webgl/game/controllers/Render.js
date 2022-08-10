@@ -2,19 +2,13 @@
 window.RESOLUTION_SCALE = 1;
 class RenderClass {
     constructor() {
-        this.updateResolution = this.updateResolution.bind(this);
         this.register = this.register.bind(this);
         this.disable = this.disable.bind(this);
         this.enable = this.enable.bind(this);
     }
     // 
     init() {
-        this.updateResolution();
-    }
-    updateResolution(){
-        // TODO :: Implement this
-        // window.videogame.canvas.width = window.innerWidth * this.RESOLUTION_SCALE;
-        // window.videogame.canvas.height = window.innerHeight * this.RESOLUTION_SCALE;
+		
     }
 
     callbacks = {}
@@ -55,7 +49,11 @@ class RenderClass {
     }
 }
 
+window.videogame = {};
+window.videogame.canvas = document.getElementById('webgl-game');
+const CANVAS_BOUNDS = window.videogame.canvas.getBoundingClientRect();
+window.videogame.CANVAS_WIDTH = CANVAS_BOUNDS.width;
+window.videogame.CANVAS_HEIGHT = CANVAS_BOUNDS.height;
 window.gameInitFunctions["preInitEleSetup1"].push(function () {
-    window.videogame = {};
-    window.videogame.canvas = document.getElementById('webgl-game');
+    
 });

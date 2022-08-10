@@ -33,7 +33,7 @@ class Engine {
     }
     initContext() {
         this.canvas = window.videogame.canvas;
-        this.CANVAS_WIDTH = window.innerWidth * window.RESOLUTION_SCALE;
+        this.CANVAS_WIDTH = window.videogame.CANVAS_WIDTH * window.RESOLUTION_SCALE;
         // this.CANVAS_HEIGHT = window.innerHeight * 0.5;
 		this.CANVAS_HEIGHT = this.CANVAS_WIDTH * 0.5625;
 		
@@ -98,7 +98,7 @@ class Engine {
         }
     }
     setViewportRatio(ratio = 1) {
-        const newWidth = (window.innerWidth * RESOLUTION_SCALE) * ratio;
+        const newWidth = (window.videogame.CANVAS_WIDTH * RESOLUTION_SCALE) * ratio;
         // const newHeight = (window.innerHeight * 0.5) * ratio;
 		const newHeight = newWidth * 0.5625;
 

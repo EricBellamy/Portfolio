@@ -32,6 +32,9 @@
 
 
 /* WebGL Canvas Stats */
+#webglGameContainer {
+	position: relative;
+}
 .canvas-stats {
     position: absolute;
     top: 0;
@@ -45,6 +48,12 @@
 }
 .canvas-stats .fps-counter {
     font-size: 150%;
+}
+.fc-gold {
+	color: #FFE700;
+}
+.fc-green {
+	color: #48FFAB;
 }
 
 

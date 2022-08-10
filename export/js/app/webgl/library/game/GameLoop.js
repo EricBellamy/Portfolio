@@ -26,9 +26,9 @@ class GameLoopClass {
     renderFrameMinimum = 0;
     uiFrameMinimum = 0;
 
-    gameFps = 20;
-    renderFps = 60;
-    uiFps = 10;
+    gameFps = 1;
+    renderFps = 1;
+    uiFps = 1;
     constructor() {
         this.start = this.start.bind(this);
         this.run = this.run.bind(this);
