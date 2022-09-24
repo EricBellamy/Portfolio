@@ -1,15 +1,48 @@
+<include src="app/webgl.css" />
+
 <div id="webglGameContainer">
-	<canvas id="webgl-game"></canvas>
-	<div class="canvas-stats">
+	<canvas id="webglRenderingEngine"></canvas>
+	<div id="canvasStart">Load Rendering Engine</div>
+	<div id="canvasRunningControl">
+		<div id="canvasRunning1"></div>
+		<div id="canvasRunning2"></div>
+	</div>
+	<div id="canvasStats">
 		<div class='pointer-lock fc-gold column'></div>
 		<div class='fps-counter fc-green column'></div>
 	</div>
-	<div id="canvasControls">
-		<div id="canvasControlHorizontal">
-			
+	<div class="canvasKeyDisplay">
+		<div id="canvasKeyHorizontal">
+			<div class="top">
+				<div class="key blank"></div>
+				<div class="key" data-value="w"><div>w</div></div>
+				<div class="key blank"></div>
+			</div>
+			<div class="bottom">
+				<div class="key" data-value="a"><div>a</div></div>
+				<div class="key" data-value="s"><div>s</div></div>
+				<div class="key" data-value="d"><div>d</div></div>
+			</div>
 		</div>
-		<div id="canvasControlVertical">
-			
+		<div id="canvasKeyVertical">
+			<div class="top">
+				<div class="key key2" data-value="space"><div>space</div></div>
+			</div>
+			<div class="bottom">
+				<div class="key key2" data-value="shift"><div>shift</div></div>
+			</div>
+		</div>
+	</div>
+	<div class="canvasKeyDisplay right">
+		<div id="canvasKeyHorizontal">
+			<div class="top">
+				<div class="key blank"></div>
+				<div class="key" data-value="o"><div>o</div></div>
+			</div>
+			<div class="bottom">
+				<div class="key" data-value="<"><div><</div></div>
+				<div class="key" data-value=">"><div>></div></div>
+			</div>
 		</div>
 	</div>
 </div>

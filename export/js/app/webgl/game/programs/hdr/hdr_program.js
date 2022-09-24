@@ -53,13 +53,15 @@ return {
 
         gl.enableVertexAttribArray(WORLD.occlusionAttribLocation);
         gl.vertexAttribPointer(
-            WORLD.occlusionAttribLocation, // Attribute location
+            WORLD.occlusionAttribLocation, // Attwribute location
             1, // Number of elements per attribute
             gl.FLOAT, // Type of elements
             gl.FALSE,
             12 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
             11 * Float32Array.BYTES_PER_ELEMENT // Offset from the beginning of a single vertex to this attribute
         );
+
+		this.isLightLocation = gl.getUniformLocation(program, 'is_light');
     },
     use: function (ENGINE, WORLD, gl, program) {
         WORLD.initLocations(program);
@@ -69,8 +71,11 @@ return {
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer.hdr);
         // gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         gl.clear(ENGINE.GL_CLEARBIT);
-        WORLD.render();
+		gl.uniform1f(this.isLightLocation, 1);
+		// WORLD.lightRender();
         WORLD.sunRender();
+		gl.uniform1f(this.isLightLocation, 0);
+        WORLD.render();
     },
     clean: function (ENGINE, WORLD, gl, program) {
         gl.bindBuffer(gl.ARRAY_BUFFER, null);

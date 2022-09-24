@@ -1,5 +1,6 @@
 return {
     init: function (ENGINE, WORLD, gl, program) {
+        WORLD.initBuffers(program);
         WORLD.initWorld(program);
         WORLD.initLocations(program);
 
@@ -52,7 +53,7 @@ return {
 
         gl.enableVertexAttribArray(WORLD.occlusionAttribLocation);
         gl.vertexAttribPointer(
-            WORLD.occlusionAttribLocation, // Attribute location
+            WORLD.occlusionAttribLocation, // Attwribute location
             1, // Number of elements per attribute
             gl.FLOAT, // Type of elements
             gl.FALSE,
@@ -66,6 +67,7 @@ return {
     },
     draw: function (ENGINE, WORLD, gl, program, textures, framebuffer) {
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer.reflection);
+        // gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         gl.clear(ENGINE.GL_CLEARBIT);
         WORLD.renderWaterEarth();
     },

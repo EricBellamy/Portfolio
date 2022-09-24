@@ -15,6 +15,8 @@ uniform mat4 mView;
 uniform mat4 mProj;
 uniform mat4 mWorld;
 
+uniform bool is_light;
+
 varying vec3 FragPos;
 varying vec4 FragColor;
 varying float EmissionIntensity;
@@ -37,7 +39,8 @@ void main()
 	FragPos = vec3(mWorld * mInstance * vec4(vert_position, 1.0));
 	EmissionIntensity = vert_emission;
 
-	if(vert_emission != 0.0){
+	// if(vert_emission != 0.0){
+	if(is_light){
 		FragColor = vert_rgba;
 	} else {
 		vec3 lightColor = vec3(1.0, 0.682, 0.0);
@@ -47,5 +50,6 @@ void main()
 		diffuse = lightDiffuse(Normal, lightDir);
 
 		FragColor = vec4(vert_rgba.rgb * (0.8 + (0.2 * (1.0 - vert_occlusion))), vert_rgba.a);
+		FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 	}
 }

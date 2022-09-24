@@ -29,7 +29,6 @@ return {
         this.textureSizeLocation = gl.getUniformLocation(program, "textureSize");
         gl.uniform2fv(this.textureSizeLocation, [ENGINE.CANVAS_WIDTH, ENGINE.CANVAS_HEIGHT]);
 
-        // console.log(framebuffer);
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer.sunshaft);
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, textures.sunhdr);

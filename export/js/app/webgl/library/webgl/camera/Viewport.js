@@ -1,29 +1,31 @@
 document.exitPointerLock = document.exitPointerLock ||
 	document.mozExitPointerLock ||
 	document.webkitExitPointerLock;
+
+window.disablingPointerLock = false;
 class ViewportClass {
 	cameraPos = [
-		13.33995313142832,
-		7.465956531269107,
-		8.269640630156431
+		14.234128330979349,
+		5.903851021227274,
+		4.299881014884274
 	];
 	cameraFront = [
-		-0.5913179177292563,
-		-0.1598811876918364,
-		-0.7904309748451059
+		-0.8072117502578706,
+		-0.12013683883464858,
+		-0.5779068525294044
 	];
 	cameraUp = [0, 1, 0];
 
 	cameraSpeed = 0.1;
 	cameraSpeedToggles = [0.05, 0.1, 0.3];
-	mouseX = -1268;
-	mouseY = 92;
-	pitch = -9.20000000000009;
-	yaw = -126.8;
+	mouseX = -1444;
+	mouseY = 69;
+	pitch = -6.900000000000086;
+	yaw = -144.40000000000143;
 	direction = [
-		-0.5913179177292563,
-		-0.1598811876918364,
-		-0.7904309748451059
+		-0.8072117502578706,
+		-0.12013683883464858,
+		-0.5779068525294044
 	];
 
 	// Mouse sensitivity
@@ -86,7 +88,9 @@ class ViewportClass {
 			callback();
 		}
 	}
-	isLocked = false;
+	isLocked() {
+		return document.pointerLockElement != null;
+	}
 	requestPointerLock() {
 		if (document.pointerLockElement === null) {
 			const canvas = window.videogame.canvas;
@@ -100,20 +104,23 @@ class ViewportClass {
 		if (status != this.pointerLock) {
 			// Enable pointer lock
 			if (status) {
-				window.addEventListener("click", this.requestPointerLock, false);
+				window.videogame.canvas.addEventListener("click", this.requestPointerLock, false);
 				const pointerTarget = 'pointerlockchange';
 				if ("onmozpointerlockchange" in document) {
 					pointerTarget = 'mozpointerlockchange';
 				}
 				document.addEventListener(pointerTarget, function () {
 					if (document.pointerLockElement === null) {
+						GameLoop.updateTickSpeed("render", 1);
 						document.removeEventListener("mousemove", this.mouseMove, false);
 					} else {
+						window.disablingPointerLock = false;
+						GameLoop.updateTickSpeed("render", 60);
 						document.addEventListener("mousemove", this.mouseMove, false);
 					}
 				}.bind(this), false);
 			} else {
-				window.removeEventListener("click", this.requestPointerLock, false);
+				windwindow.videogame.canvasow.removeEventListener("click", this.requestPointerLock, false);
 				document.exitPointerLock();
 			}
 		}
@@ -154,7 +161,8 @@ class ViewportClass {
 			yaw: this.yaw,
 			direction: this.direction,
 		}
-		tired.storage.set("Viewport", saveState);
+		console.log(saveState);
+		// tired.storage.set("Viewport", saveState);
 	}
 	load() {
 		let saveState = tired.storage.get("Viewport");
@@ -232,75 +240,126 @@ class ViewportClass {
 window.gameInitFunctions["varSetup1"].push(function () {
 	window.Viewport = new ViewportClass();
 	Viewport.lockPointer();
+
+	Viewport.requestPointerLock();
 });
+
+
+const appDisplayKeys = {
+	fwd: document.querySelector('.key[data-value="w"]'),
+	bwd: document.querySelector('.key[data-value="s"]'),
+	left: document.querySelector('.key[data-value="a"]'),
+	right: document.querySelector('.key[data-value="d"]'),
+	up: document.querySelector('.key[data-value="space"]'),
+	down: document.querySelector('.key[data-value="shift"]'),
+	sunleft: document.querySelector('.key[data-value="<"]'),
+	sunright: document.querySelector('.key[data-value=">"]'),
+	hotkeys: document.querySelector('.key[data-value="o"]'),
+};
+
+
 window.gameInitFunctions["gameInit1"].push(function () {
 	keyboard.register({
 		name: "FWD",
 		code: "keyw",
 		down: function () {
-			Viewport.keydown("w");
+			if (Viewport.isLocked()) {
+				Viewport.keydown("w");
+				appDisplayKeys.fwd.classList.toggle('active', true);
+			}
 		},
 		up: function () {
 			Viewport.keyup("w");
+			appDisplayKeys.fwd.classList.toggle('active', false);
 		}
 	});
 	keyboard.register({
 		name: "LEFT",
 		code: "keya",
 		down: function () {
-			Viewport.keydown("a");
+			if (Viewport.isLocked()) {
+				Viewport.keydown("a");
+				appDisplayKeys.left.classList.toggle('active', true);
+			}
 		},
 		up: function () {
 			Viewport.keyup("a");
+			appDisplayKeys.left.classList.toggle('active', false);
 		}
 	});
 	keyboard.register({
 		name: "BWD",
 		code: "keys",
 		down: function () {
-			Viewport.keydown("s");
+			if (Viewport.isLocked()) {
+				Viewport.keydown("s");
+				appDisplayKeys.bwd.classList.toggle('active', true);
+			}
 		},
 		up: function () {
 			Viewport.keyup("s");
+			appDisplayKeys.bwd.classList.toggle('active', false);
 		}
 	});
 	keyboard.register({
 		name: "RIGHT",
 		code: "keyd",
 		down: function () {
-			Viewport.keydown("d");
+			if (Viewport.isLocked()) {
+				Viewport.keydown("d");
+				appDisplayKeys.right.classList.toggle('active', true);
+			}
 		},
 		up: function () {
 			Viewport.keyup("d");
+			appDisplayKeys.right.classList.toggle('active', false);
 		}
 	});
 	keyboard.register({
 		name: "Up",
 		code: "space",
-		down: function () {
-			Viewport.keydown("space");
+		press: function (event) {
+			if (Viewport.isLocked()) {
+				event.preventDefault();
+			}
+		},
+		down: function (event) {
+			if (Viewport.isLocked()) {
+				Viewport.keydown("space");
+				appDisplayKeys.up.classList.toggle('active', true);
+
+				// If we're pointer locked
+				event.preventDefault();
+			}
 		},
 		up: function () {
 			Viewport.keyup("space");
+			appDisplayKeys.up.classList.toggle('active', false);
 		}
 	});
 	keyboard.register({
 		name: "Down",
 		code: "shiftleft",
 		down: function () {
-			Viewport.keydown("shift");
+			if (Viewport.isLocked()) {
+				Viewport.keydown("shift");
+				appDisplayKeys.down.classList.toggle('active', true);
+			}
 		},
 		up: function () {
 			Viewport.keyup("shift");
+			appDisplayKeys.down.classList.toggle('active', false);
 		}
 	});
 	keyboard.register({
 		name: "Camera Speed",
 		code: "keyz",
 		down: function () {
-			const cameraSpeedLen = Viewport.cameraSpeedToggles.length;
-			const speedIndex = Viewport.cameraSpeedToggles.indexOf(Viewport.cameraSpeed);
-			Viewport.cameraSpeed = Viewport.cameraSpeedToggles[(speedIndex + 1) % cameraSpeedLen];
+			if (Viewport.isLocked()) {
+				const cameraSpeedLen = Viewport.cameraSpeedToggles.length;
+				const speedIndex = Viewport.cameraSpeedToggles.indexOf(Viewport.cameraSpeed);
+				Viewport.cameraSpeed = Viewport.cameraSpeedToggles[(speedIndex + 1) % cameraSpeedLen];
+			}
 		}
 	});
 	keyboard.register({

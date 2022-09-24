@@ -26,39 +26,3 @@
 	opacity: 0.6;
 	line-height: 1.5;
 }
-
-
-
-
-
-/* WebGL Canvas Stats */
-#webglGameContainer {
-	position: relative;
-}
-.canvas-stats {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 1rem;
-    z-index: 30;
-    display: flex;
-}
-.canvas-stats .pointer-lock {
-    margin-right: 1rem;
-}
-.canvas-stats .fps-counter {
-    font-size: 150%;
-}
-.fc-gold {
-	color: #FFE700;
-}
-.fc-green {
-	color: #48FFAB;
-}
-
-
-
-#webgl-game {
-	width: 100%;
-	height: 100%;
-}

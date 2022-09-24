@@ -282,7 +282,6 @@ class Chunk {
 
 						// See through models at or below water level for reflections
 						if(y < waterBottom){
-							// console.log(targetPixel)
 							// targetPixel.waterBottom = true;
 							targetPixel.drawFront = 0;
 							targetPixel.drawBack = 0;

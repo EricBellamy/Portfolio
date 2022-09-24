@@ -393,49 +393,101 @@ class ModelManager {
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,
             ]
         },
-        "lantern": {
+        "lantern_core": {
+            size: [5, 8, 5],
+            pixels: [
+                0,0,0,0,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,0,0,0,0,
+
+                0,0,0,0,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,0,0,0,0,
+
+                0,0,0,0,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,0,0,0,0,
+
+                0,0,0,0,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,0,0,0,0,
+
+                0,0,0,0,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,0,0,0,0,
+
+                0,0,0,0,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,0,0,0,0,
+
+                0,0,0,0,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,2,2,2,0,
+                0,0,0,0,0,
+
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+            ]
+        },
+		"lantern_frame": {
             size: [5, 8, 5],
             pixels: [
                 1,1,1,1,1,
-                1,2,2,2,1,
-                1,2,2,2,1,
-                1,2,2,2,1,
+                1,0,0,0,1,
+                1,0,0,0,1,
+                1,0,0,0,1,
                 1,1,1,1,1,
 
                 1,0,0,0,1,
-                0,2,2,2,0,
-                0,2,2,2,0,
-                0,2,2,2,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
                 1,0,0,0,1,
 
                 1,0,0,0,1,
-                0,2,2,2,0,
-                0,2,2,2,0,
-                0,2,2,2,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
                 1,0,0,0,1,
 
                 1,0,0,0,1,
-                0,2,2,2,0,
-                0,2,2,2,0,
-                0,2,2,2,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
                 1,0,0,0,1,
 
                 1,0,0,0,1,
-                0,2,2,2,0,
-                0,2,2,2,0,
-                0,2,2,2,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
                 1,0,0,0,1,
 
                 1,0,0,0,1,
-                0,2,2,2,0,
-                0,2,2,2,0,
-                0,2,2,2,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
                 1,0,0,0,1,
 
                 1,1,1,1,1,
-                1,2,2,2,1,
-                1,2,2,2,1,
-                1,2,2,2,1,
+                1,0,0,0,1,
+                1,0,0,0,1,
+                1,0,0,0,1,
                 1,1,1,1,1,
 
                 0,0,0,0,0,
@@ -641,11 +693,13 @@ class ModelManager {
             }
         }
         const FINAL_COLORS = [];
+		let HAS_EMISSION = false;
         for (let a = 0; a < MODEL_COLORS.length; a++) {
             FINAL_COLORS.push([
                 [...MODEL_COLORS[a][0], MODEL_COLORS[a][1]], // rgba
                 MODEL_COLORS[a][2] != undefined ? MODEL_COLORS[a][2] : 0 // emissionIntensity
             ]);
+			if(MODEL_COLORS[a][2] != 0) HAS_EMISSION = true;
         }
 
         // Create the chunk with the formatted colors
@@ -701,7 +755,7 @@ class ModelManager {
             // console.error(`[buffer] Can't buffer group: "${GROUP_NAME}". Doesn't exist.`);
         }
     }
-    draw(GROUP_NAME, matrixAttribLocation) {
+    draw(GROUP_NAME, matrixAttribLocation, debug = false) {
         const model = this.group_attributes[GROUP_NAME];
 
         if (model) {
@@ -735,7 +789,6 @@ class ModelManager {
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 
 
-
             // Instance data
             gl.bufferData(gl.ARRAY_BUFFER, model.data.pixelVertexColorData, gl.STATIC_DRAW);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, model.data.pixelIndiceData, gl.STATIC_DRAW);
@@ -743,7 +796,7 @@ class ModelManager {
             ext.drawArraysInstancedANGLE(
                 gl.TRIANGLES,
                 0,             // offset
-                model.data.pixelVertexColorData.length / 12,   // num vertices per instance
+                model.data.pixelVertexColorData.length / 12 ,   // num vertices per instance
                 model.matrices.length,  // num instances
             );
         } else {
@@ -755,43 +808,52 @@ window.gameInitFunctions["varSetup1"].push(function () {
     window.model = new ModelManager();
 });
 
+function updateSun(){
+	window.calculateSunPosition();
+	window.model.updatePosition("sun", "sun", window.sunPosition);
+	window.model.rebuildMatrix("sun");
+}
+
 const sunOffset = 10;
-window.sunFrame = 0;
+window.sunFrame = -22;
 window.sunPosition = [0,sunOffset, -sunOffset];
 window.calculateSunPosition = function(){
     window.sunPosition = [sunOffset * Math.sin(window.sunFrame / 30), sunOffset * Math.cos(window.sunFrame / 30), -sunOffset * Math.cos(window.sunFrame / 30)];
 }
+
 window.gameInitFunctions["gameInit2"].push(function () {
     keyboard.register({
         name: "Sun Left",
         code: "comma",
         down: function () {
-            window.sunFrame++;
-            window.calculateSunPosition();
-            window.model.updatePosition("sun", "sun", window.sunPosition);
-            window.model.rebuildMatrix("sun");
+            window.sunFrame -= 0.25;
+            updateSun();
+
+			appDisplayKeys.sunleft.classList.toggle('active', true);
         },
         hold: function(){
-            window.sunFrame++;
-            window.calculateSunPosition();
-            window.model.updatePosition("sun", "sun", window.sunPosition);
-            window.model.rebuildMatrix("sun");
-        }
+            window.sunFrame -= 0.25;
+            updateSun();
+        },
+		up: function(){
+			appDisplayKeys.sunleft.classList.toggle('active', false);
+		}
     });
     keyboard.register({
         name: "Sun Right",
         code: "period",
         down: function () {
-            window.sunFrame--;
-            window.calculateSunPosition();
-            window.model.updatePosition("sun", "sun", window.sunPosition);
-            window.model.rebuildMatrix("sun");
+            window.sunFrame += 0.25;
+            updateSun();
+
+			appDisplayKeys.sunright.classList.toggle('active', true);
         },
         hold: function(){
-            window.sunFrame--;
-            window.calculateSunPosition();
-            window.model.updatePosition("sun", "sun", window.sunPosition);
-            window.model.rebuildMatrix("sun");
-        }
+            window.sunFrame += 0.25;
+            updateSun();
+        },
+		up: function(){
+			appDisplayKeys.sunright.classList.toggle('active', false);
+		}
     });
 });

@@ -44,8 +44,10 @@ class GameLoopClass {
         this.UI.init();
     }
     start() {
-        this.state = true;
-        requestAnimationFrame(this.run);
+		if(!this.state){
+			this.state = true;
+			requestAnimationFrame(this.run);
+		}
     }
     stop() {
         this.state = false;

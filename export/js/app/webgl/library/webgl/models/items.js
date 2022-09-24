@@ -1,1 +1,0 @@
-// Same thing as monsters except this holds the rules for all item models

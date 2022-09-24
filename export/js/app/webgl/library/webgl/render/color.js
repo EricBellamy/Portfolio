@@ -73,7 +73,7 @@ window.palette = {
 	tree_leaves: window.color.hex("017301"),
 
 	iron: window.color.hex("111"),
-	lantern: window.color.hex("ff9100"),
+	lantern: window.color.hex("bbbb02"),
 
 	flower_stem: window.color.hex("027a02"),
 	flower_core: window.color.hex("ffff00"),

@@ -58,12 +58,10 @@ return {
 
         this.drawFrameLocation = gl.getUniformLocation(program, "drawFrame");
         gl.uniform1f(this.drawFrameLocation, DRAW_FRAME);
-
-        // console.log(DRAW_FRAME);
     },
     draw: function (ENGINE, WORLD, gl, program, textures, framebuffer) {
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer.waterhdr);
-        // gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+		// gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         gl.clear(ENGINE.GL_CLEARBIT);
 
         // Bind the reflection texture
@@ -73,7 +71,11 @@ return {
         gl.uniform1f(this.isWaterLocation, 0);
         WORLD.render();
         gl.uniform1f(this.isWaterLocation, 1);
-        WORLD.waterRender();
+		WORLD.waterRender();
+		gl.uniform1f(this.isWaterLocation, 0);
+
+
+		// gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     },
     clean: function (ENGINE, WORLD, gl, program) {
         gl.bindBuffer(gl.ARRAY_BUFFER, null);

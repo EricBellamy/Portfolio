@@ -129,7 +129,7 @@ class KeyboardClass {
 			this.updateIdleActions();
 		}.bind(this));
 
-		window.addEventListener('blur', function(){
+		window.addEventListener('blur', function () {
 			this.releaseAllKeys();
 		}.bind(this));
 	}
@@ -149,14 +149,14 @@ class KeyboardClass {
 	toggle() {
 		this.PARENT_ELEMENT.classList.toggle("active");
 		this.displayState = !this.displayState;
-		if(this.displayState){
+		if (this.displayState) {
 			this.updateKeyPositions();
 		}
 	}
 	show() {
 		this.PARENT_ELEMENT.classList.toggle("active", true);
 		this.displayState = true;
-		if(this.displayState){
+		if (this.displayState) {
 			this.updateKeyPositions();
 		}
 	}
@@ -165,19 +165,23 @@ class KeyboardClass {
 		this.displayState = false;
 	}
 	initListener() {
+		document.addEventListener("keypress", function (event) {
+			this.keypress(event.code.toLowerCase(), event);
+		}.bind(this), false);
 		document.addEventListener("keydown", function (event) {
-			this.keydown(event.code.toLowerCase());
+			this.keydown(event.code.toLowerCase(), event);
 		}.bind(this), false);
 		document.addEventListener("keyup", function (event) {
 			this.keyup(event.code.toLowerCase());
 		}.bind(this));
 	}
+	pressActions = {};
 	downActions = {};
 	holdActions = {};
 	upActions = {};
 	actions = [];
 	register(params) {
-		if((params.down === undefined && params.up === undefined) || params.name === undefined){
+		if ((params.down === undefined && params.up === undefined) || params.name === undefined) {
 			return false;
 		}
 		// name, downCallback, keycode, upCallback, id
@@ -189,6 +193,9 @@ class KeyboardClass {
 		if (params.code) {
 			// TODO :: CHECK IF NAME IS IN LOCAL STORAGE KEYCODES, OVERRIDE KEYCODE IF EXISTS
 			const keycode = params.code.toLowerCase();
+			if (newAction.press) {
+				this.pressActions[keycode] = newAction.press;
+			}
 			if (newAction.down) {
 				this.downActions[keycode] = newAction.down;
 			}
@@ -317,19 +324,23 @@ class KeyboardClass {
 		}
 		this.HOTKEY_ACTIONS.appendChild(action.element);
 	}
-	releaseAllKeys(){
-		for(let down_code in this.downActions){
+	releaseAllKeys() {
+		for (let down_code in this.downActions) {
 			const action = this.downActions[down_code];
 			action.keydown = false;
 			this.ACTIVE_ELEMENTS[down_code]?.action?.element?.classList.toggle("active", false);
 		}
 	}
-	keydown(code) {
+	keypress(code, event) {
+		const action = this.pressActions[code];
+		if (action) action(event);
+	}
+	keydown(code, event) {
 		const action = this.downActions[code];
 		if (action && action.keydown != true) {
 			this.ACTIVE_ELEMENTS[code]?.action?.element?.classList.toggle("active", true);
 			action.keydown = true;
-			action();
+			action(event);
 		}
 	}
 	keyup(code) {
@@ -344,9 +355,9 @@ class KeyboardClass {
 			action();
 		}
 	}
-	activateHolds(){
-		for(const action_key in this.holdActions){
-			if(this.downActions[action_key].keydown){
+	activateHolds() {
+		for (const action_key in this.holdActions) {
+			if (this.downActions[action_key].keydown) {
 				this.holdActions[action_key]();
 			}
 		}
@@ -382,8 +393,8 @@ class KeyboardClass {
 		}
 
 		// Check screen width to determine baseWidth
-		// this.BASE_WIDTH = Math.min(Math.floor(((windowWidth - horizontalPadding) / rowKeyLen) * 100) / 100, 60);
-		this.BASE_WIDTH = windowWidth;
+		this.BASE_WIDTH = Math.min(Math.floor(((windowWidth - horizontalPadding) / rowKeyLen) * 100) / 100, 60);
+		// this.BASE_WIDTH = windowWidth;
 		const styles = `
 		.hotkey-container {
 			position: fixed;
@@ -635,7 +646,7 @@ class KeyboardClass {
 			active_elements[element_key].originY = bounds.y + (bounds.height / 2);
 			active_elements[element_key].oversize = widthMultiplier;
 
-			if(active_elements[element_key].action){
+			if (active_elements[element_key].action) {
 				this.snapElementToAction(active_elements[element_key].action.element, active_elements[element_key]);
 			}
 		}
@@ -659,10 +670,15 @@ window.gameInitFunctions["varSetup1"].push(function () {
 	window.keyboard = new KeyboardClass();
 
 	keyboard.register({
-        name: "Hotkey Editor",
-        code: "keyo",
-        down: function () {
-            window.keyboard.toggle();
-        }
-    });
+		name: "Hotkey Editor",
+		code: "keyo",
+		down: function () {
+			window.keyboard.toggle();
+
+			appDisplayKeys.hotkeys.classList.toggle('active', true);
+		},
+		up: function () {
+			appDisplayKeys.hotkeys.classList.toggle('active', false);
+		}
+	});
 });

@@ -1,0 +1,92 @@
+/* WebGL Canvas Stats */
+#webglGameContainer {
+	position: relative;
+}
+#canvasStats {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    z-index: 30;
+    display: none;
+}
+.running #canvasStats {
+	display: flex;
+}
+#canvasStats .pointer-lock {
+    margin-right: 1rem;
+}
+#canvasStats .fps-counter {
+    font-size: 150%;
+}
+.fc-gold {
+	color: #FFE700;
+}
+.fc-green {
+	color: #48FFAB;
+}
+
+
+
+#webglRenderingEngine {
+	width: 100%;
+	height: 100%;
+}
+
+
+#canvasStart {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #ffffff22;
+	padding: 1rem 2rem;
+	cursor: pointer;
+}
+.running #canvasStart {
+	display: none;
+}
+
+
+/* Canvas Key Display */
+.canvasKeyDisplay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	display: none;
+	margin: 10px;
+}
+.canvasKeyDisplay.right {
+	left: auto;
+	right: 0;
+}
+.running .canvasKeyDisplay {
+	display: flex;
+}
+.canvasKeyDisplay .key {
+	width: 40px;
+	height: 40px;
+	position: relative;
+	background: #ffffff19;
+	margin-right: 10px;
+	margin-top: 10px;
+	font-size: 16px;
+}
+.canvasKeyDisplay .key.active {
+	background: #ffffff55;
+}
+.canvasKeyDisplay .key.blank {
+	background: none;
+}
+.canvasKeyDisplay .key2 {
+	width: 80px;
+}
+.canvasKeyDisplay .key div {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.canvasKeyDisplay #canvasKeyHorizontal * {
+	display: flex;
+}

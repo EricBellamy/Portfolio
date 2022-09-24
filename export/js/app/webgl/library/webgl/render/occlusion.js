@@ -219,7 +219,6 @@ window.occlusion = {
             }
         }
 
-        // console.log(occlusion);
         if (isFlippedQuad(...occlusion)) targetPixel.isFlipped[2] = true;
         targetPixel.occlusionHash[2] = occlusion.join("|");
     },

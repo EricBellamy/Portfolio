@@ -56,7 +56,7 @@ window.loaded = async function () {
 	window.start();
 }
 
-function immediate(count = 0, maxCount = 1) {
+window.loadWebglRenderingEngine = function(count = 0, maxCount = 1) {
 	tired.load([
 		"./js/app/webgl/LoadFiles.js",
 		"./js/app/webgl/LoadingGrid.js"
@@ -71,5 +71,7 @@ function immediate(count = 0, maxCount = 1) {
 		}
 	});
 }
-
-immediate();
+document.querySelector("#canvasStart").addEventListener("click", function(){
+	window.loadWebglRenderingEngine();
+	document.querySelector("#webglGameContainer").classList.toggle("running", true);
+});

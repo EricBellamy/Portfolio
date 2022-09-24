@@ -135,6 +135,7 @@ return {
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer.scene);
         gl.clear(ENGINE.GL_CLEARBIT);
         WORLD.render();
+		WORLD.lightRender();
     },
     clean: function (ENGINE, WORLD, gl, program) {
         gl.bindBuffer(gl.ARRAY_BUFFER, null);

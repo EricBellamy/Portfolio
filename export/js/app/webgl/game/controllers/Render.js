@@ -50,7 +50,7 @@ class RenderClass {
 }
 
 window.videogame = {};
-window.videogame.canvas = document.getElementById('webgl-game');
+window.videogame.canvas = document.getElementById('webglRenderingEngine');
 const CANVAS_BOUNDS = window.videogame.canvas.getBoundingClientRect();
 window.videogame.CANVAS_WIDTH = CANVAS_BOUNDS.width;
 window.videogame.CANVAS_HEIGHT = CANVAS_BOUNDS.height;

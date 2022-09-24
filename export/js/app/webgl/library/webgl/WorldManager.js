@@ -63,23 +63,39 @@ class WorldManager {
 
 
 
-        // The lantern
-        window.model.link("lantern", {
-            model: "lantern",
+        // The lantern glowy core
+        window.model.link("lantern_core", {
+            model: "lantern_core",
             colors: [
-                [palette.iron, 1, 0],
                 [palette.lantern, 1, 0.5],
             ]
         });
-        window.model.new("lantern", {
-            name: `lantern`,
+        window.model.new("lantern_core", {
+            name: `lantern_core`,
             pos: [5.25, 3, -3.25],
             pitch: 0,
             yaw: 0,
             alpha: 1,
             scale: 0.1,
         }, false);
-        window.model.rebuild("lantern");
+        window.model.rebuild("lantern_core");
+
+		// The lantern glowy core
+        window.model.link("lantern_frame", {
+            model: "lantern_frame",
+            colors: [
+                [palette.iron, 1, 0],
+            ]
+        });
+        window.model.new("lantern_frame", {
+            name: `lantern_frame`,
+            pos: [5.25, 3, -3.25],
+            pitch: 0,
+            yaw: 0,
+            alpha: 1,
+            scale: 0.1,
+        }, false);
+        window.model.rebuild("lantern_frame");
 
 
         // Grass
@@ -181,6 +197,7 @@ class WorldManager {
             alpha: 1
         }, false);
         window.model.rebuild("sun");
+		updateSun();
 
         // Yellow Duck
         window.model.link("duck", {
@@ -308,12 +325,19 @@ class WorldManager {
 
         window.model.draw("boots", this.matrixAttribLocation);
 
-        window.model.draw("lantern", this.matrixAttribLocation);
+		window.model.draw("lantern_frame", this.matrixAttribLocation);
+
         window.model.draw("flower", this.matrixAttribLocation);
         window.model.draw("multiflower", this.matrixAttribLocation);
         window.model.draw("grass", this.matrixAttribLocation);
         window.model.draw("long_grass", this.matrixAttribLocation);
     }
+	lightRender(){
+		window.model.draw("lantern_core", this.matrixAttribLocation);
+	}
+	debugLightRender(){
+		window.model.draw("lantern_core", this.matrixAttribLocation, true);
+	}
     sunRender(){
         window.model.draw("sun", this.matrixAttribLocation);
     }
@@ -340,7 +364,8 @@ class WorldManager {
         window.model.buffer("bench");
         window.model.buffer("boots");
 
-        window.model.buffer("lantern");
+        window.model.buffer("lantern_core");
+		window.model.buffer("lantern_frame");
         window.model.buffer("flower");
         window.model.buffer("multiflower");
         window.model.buffer("grass");
