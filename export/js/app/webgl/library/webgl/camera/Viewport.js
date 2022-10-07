@@ -255,7 +255,29 @@ const appDisplayKeys = {
 	sunleft: document.querySelector('.key[data-value="<"]'),
 	sunright: document.querySelector('.key[data-value=">"]'),
 	hotkeys: document.querySelector('.key[data-value="o"]'),
+
+	one: document.querySelector('.key[data-value="1"]'),
+	two: document.querySelector('.key[data-value="2"]'),
+	three: document.querySelector('.key[data-value="3"]'),
+	four: document.querySelector('.key[data-value="4"]'),
+	five: document.querySelector('.key[data-value="5"]'),
+	six: document.querySelector('.key[data-value="6"]'),
 };
+let currentIndex = 1;
+function toggleSceneKey(index, newValue = true){
+	if(newValue) { 
+		toggleSceneKey(currentIndex, false);
+		currentIndex = index;
+	}
+
+	if(index === 1) appDisplayKeys.one.classList.toggle('active', newValue);
+	else if(index === 2) appDisplayKeys.two.classList.toggle('active', newValue);
+	else if(index === 3) appDisplayKeys.three.classList.toggle('active', newValue);
+	else if(index === 4) appDisplayKeys.four.classList.toggle('active', newValue);
+	else if(index === 5) appDisplayKeys.five.classList.toggle('active', newValue);
+	else if(index === 6) appDisplayKeys.six.classList.toggle('active', newValue);
+}
+toggleSceneKey(1);
 
 
 window.gameInitFunctions["gameInit1"].push(function () {

@@ -9,7 +9,7 @@ window.gameInitFunctions["postInitEleSetup1"].push(function () {
             fpsCounter.innerText = renderFps;
         }
 
-        let pointerString = "LOCKED (ESCAPE TO RELEASE)";
+        let pointerString = "CURSOR LOCKED (ESCAPE TO RELEASE)";
         if (document.pointerLockElement === null) {
             pointerString = "";
         }

@@ -224,6 +224,21 @@ window.gameInitFunctions["gameInit2"].push(function () {
 	//     }
 	// });
 
+	window.program.register("water", {
+		scene: {
+			params: [1, true],
+		},
+
+		reflection: {
+			params: [1, true, 0.25]
+		},
+
+		waterhdr: {
+			params: [0, false, 1.0],
+			links: ["reflection"]
+		},
+	});
+
 	window.program.register("reflections", {
 		scene: {
 			params: [1, true],
@@ -257,20 +272,10 @@ window.gameInitFunctions["gameInit2"].push(function () {
 			links: ["hdr"]
 		},
 
-		// debug_mip: {
-		//     params: [0, false],
-		//     links: [{ input: { base: "cod_downsample", index: 1 }, output: { base: "debug_texture" } }]
-		// },
-
 		cod_upsample: {
 			params: [1, false, 0.25, true],
 			links: ["hdr", "cod_downsample"]
 		},
-
-		// debug_mip: {
-		//     params: [0, false],
-		//     links: [{ input: { base: "cod_upsample" }, output: { base: "debug_texture" } }]
-		// },
 
 		sunblend: {
 			params: [1, false, 0.5],
@@ -377,6 +382,7 @@ window.gameInitFunctions["gameInit2"].push(function () {
 		name: "Reflect",
 		code: "digit1",
 		down: function () {
+			toggleSceneKey(1);
 			window.engine.programMode("reflections");
 		}
 	});
@@ -384,27 +390,39 @@ window.gameInitFunctions["gameInit2"].push(function () {
 		name: "Scene",
 		code: "digit2",
 		down: function () {
+			toggleSceneKey(2);
 			window.engine.programMode("scene");
 		}
 	});
 	keyboard.register({
-		name: "HDR",
+		name: "Water",
 		code: "digit3",
 		down: function () {
+			toggleSceneKey(3);
+			window.engine.programMode("water");
+		}
+	});
+	keyboard.register({
+		name: "HDR",
+		code: "digit4",
+		down: function () {
+			toggleSceneKey(4);
 			window.engine.programMode("hdr");
 		}
 	});
 	keyboard.register({
 		name: "Bloom",
-		code: "digit4",
+		code: "digit5",
 		down: function () {
+			toggleSceneKey(5);
 			window.engine.programMode("bloom");
 		}
 	});
 	keyboard.register({
 		name: "Shaft",
-		code: "digit5",
+		code: "digit6",
 		down: function () {
+			toggleSceneKey(6);
 			window.engine.programMode("sunshaft");
 		}
 	});

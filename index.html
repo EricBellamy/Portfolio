@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<include src="head.html" 
-		title="Eric Bellamy"
-		description="Canadian contract developer working across the stack." />
 
-		<include src="global.css" />
-		<include src="handy.css" />
-		<include src="import/social-icons.css" />
-	</head>
-	<body>
-		<div id="intro" class="fullscreen">
-			<include src="intro.html" />
-		</div>
-		<div id="professional">
-			<include src="professional.html" />
-		</div>
-		<div id="personal">
-			<!-- Basic list of individual projects -->
-			<include src="personal.html" />
-		</div>
-		<include src="scroll.js" />
-	</body>
+<head>
+	<include src="head.html" title="Eric Bellamy" description="Canadian contract developer working across the stack." />
+
+	<include src="global.css" />
+	<include src="handy.css" />
+	<include src="import/social-icons.css" />
+</head>
+
+<body>
+	<!-- WebGL Shader Transitions -->
+	<div id="distortionContainer">
+		<include src="distortion.html" />
+	</div>
+
+	<!-- Block Scroll -->
+
+
+	<!-- Page Content -->
+	<div id="intro" class="fullscreen">
+		<include src="intro.html" />
+	</div>
+
+	<div id="professional">
+		<include src="professional.html" />
+	</div>
+	<div id="personal">
+		<!-- Basic list of individual projects -->
+		<include src="personal.html" />
+	</div>
+	<include src="scroll.js" />
+	<script>
+		tired.load("/img/distortion.jpg", {
+			callback: function () {
+				setTimeout(function () {
+					window.initDistortion();
+				}, 100);
+			}
+		});
+	</script>
+</body>
+
 </html>

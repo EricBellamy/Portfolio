@@ -1,12 +1,14 @@
 #professional {
+	z-index: 20;
 	height: 500%;
 	color: #fff;
+	position: relative;
 }
 #professional .fullscreen {
 	height: 20%;
 }
 #tipsy-vp {
-	background: #D6BC7A;
+	/* background: #111; */
 }
 #tipsy-contract {
 	background: #242335;
@@ -37,7 +39,7 @@
 	font-size: 24px;
 }
 #professional .right .date {
-	opacity: 0.6;
+	color: #aaa;
 }
 #professional .right .title {
 	font-size: 48px;

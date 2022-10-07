@@ -52,8 +52,33 @@ class RenderClass {
 window.videogame = {};
 window.videogame.canvas = document.getElementById('webglRenderingEngine');
 const CANVAS_BOUNDS = window.videogame.canvas.getBoundingClientRect();
-window.videogame.CANVAS_WIDTH = CANVAS_BOUNDS.width;
-window.videogame.CANVAS_HEIGHT = CANVAS_BOUNDS.height;
+
+const windowInnerHeight = window.innerHeight;
+
+// window.videogame.CANVAS_WIDTH = CANVAS_BOUNDS.width;
+// window.videogame.CANVAS_HEIGHT = CANVAS_BOUNDS.height;
+
+if(CANVAS_BOUNDS.height < windowInnerHeight - 40){
+	window.videogame.CANVAS_WIDTH = CANVAS_BOUNDS.width;
+	window.videogame.CANVAS_HEIGHT = CANVAS_BOUNDS.height;
+} else {
+	const heightPadding = 40;
+	const newHeight = windowInnerHeight - heightPadding;
+	const newWidth = Math.floor((newHeight) * (1/0.5625));
+
+	window.videogame.CANVAS_WIDTH = newWidth;
+	window.videogame.CANVAS_HEIGHT = newHeight;
+
+	document.querySelector("#webglGameContainer").style.width = `${newWidth}px`;
+	document.querySelector("#webglGameContainer").style.height = `${newHeight}px`;
+	document.querySelector("#webglGameContainer").style.paddingBottom = 0;
+	document.querySelector("#webglGameContainer").style.marginTop = `${heightPadding / 2}px`;
+}
+
+document.querySelector("#webglGameContainer").classList.toggle("sized", true);
+
+
+
 window.gameInitFunctions["preInitEleSetup1"].push(function () {
     
 });
