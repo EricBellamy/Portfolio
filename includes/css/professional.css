@@ -6,21 +6,22 @@
 }
 #professional .fullscreen {
 	height: 20%;
+	/* opacity: 0; */
 }
 #tipsy-vp {
 	/* background: #111; */
 }
 #tipsy-contract {
-	background: #242335;
+	/* background: #242335; */
 }
 #fbe-superfam {
-	background: #1A78BC;
+	/* background: #1A78BC; */
 }
 #oscarakermo {
-	background: #202020;
+	/* background: #202020; */
 }
 #tipsy-exclusive {
-	background: #111111;
+	/* background: #111111; */
 }
 
 #professional .content {
@@ -39,7 +40,7 @@
 	font-size: 24px;
 }
 #professional .right .date {
-	color: #aaa;
+	color: #ffffff99;
 }
 #professional .right .title {
 	font-size: 48px;

@@ -1,8 +1,12 @@
 window.tired.resize = {
 	events: [],
 	debouncedResize: false,
+	addEvent: function(callback){
+		console.log("THE RESIZE:");
+		console.log(this);
+	},
 	watch: function (fps) {
-		const msDelay = 1000 / fps;
+		const msDelay = Math.floor(1000 / fps);
 		if (window.tired.resize.debouncedResize) {
 			window.removeEventListener("resize", window.tired.resize.debouncedResize, true);
 		}
@@ -18,3 +22,7 @@ window.tired.resize = {
 		window.tired.resize.debouncedResize = debouncedResize;
 	}
 }
+
+window.tired.resize.addEvent(function(){
+	console.log("HELLO RESIZED WORLD!");
+})

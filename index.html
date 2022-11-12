@@ -11,12 +11,7 @@
 
 <body>
 	<!-- WebGL Shader Transitions -->
-	<div id="distortionContainer">
-		<include src="distortion.html" />
-	</div>
-
-	<!-- Block Scroll -->
-
+	<include src="webgl/distortion.html" />
 
 	<!-- Page Content -->
 	<div id="intro" class="fullscreen">
@@ -26,10 +21,21 @@
 	<div id="professional">
 		<include src="professional.html" />
 	</div>
+	<!-- Block Scroll -->
+	<include src="webgl/scroller.html" />
+
 	<div id="personal">
 		<!-- Basic list of individual projects -->
 		<include src="personal.html" />
 	</div>
+
+	<div class="scroll-checkpoint"></div>
+	<div id="contact" class="fullscreen">
+		<include src="contact.html" />
+	</div>
+	<div class="fullscreen"></div>
+	<include src="scroll-manager.js" />
+	<include src="webgl/scroller.js" />
 	<include src="scroll.js" />
 	<script>
 		tired.load("/img/distortion.jpg", {

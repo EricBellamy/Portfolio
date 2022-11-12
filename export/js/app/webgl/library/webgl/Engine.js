@@ -3,7 +3,7 @@ function isPowerOf2(value) {
 }
 
 let DRAW_FRAME = 0;
-class Engine {
+class RenderingEngine {
 	canvas = false;
 	gl = false;
 	GL_CLEARBIT;
@@ -341,7 +341,7 @@ window.gameInitFunctions["gameInit2"].push(function () {
 		},
 	});
 	window.program.load(function () {
-		window.engine = new Engine(false);
+		window.engine = new RenderingEngine(false);
 		GameLoop.RENDER.register("webgl", window.engine.draw);
 	});
 

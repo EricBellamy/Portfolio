@@ -8,12 +8,22 @@ WebGLDistortionScroller = function (input) {
 	this._program = null;
 	this._positionAttrib = 0;
 	this._uvAttrib = 0;
-	this._amountLoc = null;
-	this._phaseLoc = null;
 	this._phase = 0;
+	this._phaseLoc = null;
 	this._amount = 0;
+	this._amountLoc = null;
+
+	this._color = [1,1,1];
+	this._colorLoc = null;
+
+	this.mode = -1;
+	this.scrollOffset = 0;
+	this.amountRealistic = 0.93;
+	this.amountMax = 0.95;
+
+
 	this._amountTarget = 0;
-	this._cutOff = 1.0;
+	this._cutOff = 0;
 
 	// adjustable properties:
 	this.strengthX = -0.0725;
@@ -22,30 +32,42 @@ WebGLDistortionScroller = function (input) {
 	this.hardness = 30.0;
 
 	// Fired when the program has finished it's animation
-	this.onpause = input.onpause;
+	this.onPause = input.onPause;
+	this.onFirstRender = input.onFirstRender;
 
-	this._init(input.displacement);
+	this.displacement = input.displacement;
 };
 
 WebGLDistortionScroller.prototype =
 {
 	start: function () {
-		this.running = true;
-		self.requestAnimationFrame(this._render.bind(this));
+		if(this.running != true){
+			this.running = true;
+			self.requestAnimationFrame(this._render.bind(this));
+		}
+	},
+	stop: function(){
+		this.running = false;
 	},
 
-	_init: function (displacementMap) {
+	init: function () {
 		this._canvas = document.querySelector("#distortion");
 
 		this._initWebGL();
 		if (!this._gl) return;
 
-		this._displacementMap = this._initTexture(displacementMap, this._gl.REPEAT);
+		this._displacementMap = this._initTexture(this.displacement, this._gl.REPEAT);
 
 		this._resize();
 		this._prepareRender();
 
-		this.start();
+		// Render just to initialize the canvas
+		// this._render();
+		// if (document.documentElement.scrollTop != 0) this.start();
+		// else this._renderLogic();
+		// this._renderLogic();
+
+		this.onFirstRender();
 	},
 
 	_initWebGL: function () {
@@ -118,6 +140,8 @@ WebGLDistortionScroller.prototype =
 		this._gl.useProgram(this._program);
 		texLoc = this._gl.getUniformLocation(this._program, "displacementMap");
 		this._gl.uniform1i(texLoc, 0);
+
+		this._colorLoc = this._gl.getUniformLocation(this._program, "color");
 		this._amountLoc = this._gl.getUniformLocation(this._program, "amount");
 		this._cutoffLoc = this._gl.getUniformLocation(this._program, "cutoff");
 		this._hardnessLoc = this._gl.getUniformLocation(this._program, "hardness");
@@ -147,6 +171,7 @@ WebGLDistortionScroller.prototype =
 	_prepareRender: function () {
 		const gl = this._gl;
 
+		this.scrollingElement = document.documentElement ? document.documentElement : document.body.scrollTop;
 
 
 		gl.viewport(0, 0, this._canvas.clientWidth, this._canvas.clientHeight);
@@ -166,6 +191,8 @@ WebGLDistortionScroller.prototype =
 		gl.vertexAttribPointer(this._uvAttrib, 2, gl.FLOAT, false, 16, 8);
 
 
+		gl.uniform3f(this._colorLoc, this._color[0], this._color[1], this._color[2]);
+
 
 		// Binds the textures to the display
 		gl.activeTexture(gl.TEXTURE0);
@@ -175,19 +202,21 @@ WebGLDistortionScroller.prototype =
 		gl.uniform1f(this._hardnessLoc, this.hardness);
 	},
 
+	getScrollTop: function () {
+		return this.scrollingElement.scrollTop - this.scrollOffset;
+	},
 	calculateScrollTarget: function () {
-		const scrolling = (document.documentElement && document.documentElement.scrollTop) ||
-			document.body.scrollTop;
+		const scrolling = this.getScrollTop();
 
 		this._amountTarget = Math.min(
 			Math.max(0, scrolling / window.innerHeight)
-			, 0.95);
+			, this.amountMax);
 
 		return this._amountTarget;
 	},
 	shouldBeActive: function () {
 		this.calculateScrollTarget();
-		if (0.95 === this._amountTarget) return false;
+		if (this.amountRealistic < this._amountTarget) return false;
 		return true;
 	},
 	_updateScrollVariables: function () {
@@ -195,20 +224,20 @@ WebGLDistortionScroller.prototype =
 
 		this._amount = (this._amountTarget + this._amount) * .5;
 		this._cutOff = (this._amountTarget + this._cutOff) * .5;
-
-		if (0.93 < this._amount && 0.93 < this._cutOff) {
-			this.running = false;
-			this.onpause();
-		}
 	},
 
-	running: true,
-	_render: function (timeStamp) {
+	running: false,
+	_render: function () {
 		if (this.running) self.requestAnimationFrame(this._render.bind(this));
 		else return;
 
+		this._updateRenderVariables();
+		this._renderLogic();
+	},
+	_updateRenderVariables: function(){
 		this._updateScrollVariables();
-
+	},
+	_renderLogic: function () {
 		const gl = this._gl;
 
 
@@ -222,6 +251,23 @@ WebGLDistortionScroller.prototype =
 		// Draws the textures
 		gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
 	},
+
+	changeMode: function(mode, color, scrollOffset, amountRealistic, amountMax){
+		this._cutOff = 0;
+		this._amount = 0;
+
+		this.mode = mode;
+		this._color = color;
+		this.scrollOffset = scrollOffset;
+
+		this.amountRealistic = amountRealistic;
+		this.amountMax = amountMax;
+
+		this._prepareRender();
+		this._updateRenderVariables();
+		this._renderLogic();
+		this.onFirstRender();
+	}
 };
 
 WebGLDistortionScroller.VERTEX_SHADER =
@@ -246,12 +292,12 @@ WebGLDistortionScroller.FRAGMENT_SHADER =
 
 		"uniform sampler2D displacementMap;",
 
+		"uniform vec3 color;",
+
 		"uniform vec2 amount;",
 		"uniform float phase;",
 		"uniform float hardness;",
 		"uniform float cutoff;",
-
-		"uniform vec3 contentLimit;",
 
 		"void main()",
 		"{",
@@ -260,7 +306,7 @@ WebGLDistortionScroller.FRAGMENT_SHADER =
 		"   offset.x = sin(uv.x * 15.0 + phase) * .05;",
 		"   offset.y = cos(uv.y * 15.0 + phase) * .05;",
 		"   sampleUV += (texture2D(displacementMap, uv * 1.2 + offset).xy - .5) * amount;",
-		"   gl_FragColor = vec4(1.0);",
+		"   gl_FragColor = vec4(color.rgb, 1.0);",
 		"   if (sampleUV.y > 1.0 || sampleUV.y < cutoff) gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);",
 		"}",
 	].join("\n");
