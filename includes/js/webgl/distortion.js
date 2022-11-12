@@ -310,3 +310,10 @@ WebGLDistortionScroller.FRAGMENT_SHADER =
 		"   if (sampleUV.y > 1.0 || sampleUV.y < cutoff) gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);",
 		"}",
 	].join("\n");
+
+tired.resize.addEvent(function(){
+	if(window.distortionScroller) {
+		window.distortionScroller._resize();
+		window.distortionScroller._prepareRender();
+	}
+});
