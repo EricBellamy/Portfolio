@@ -47,6 +47,7 @@
 	background: #ffffff22;
 	padding: 1rem 2rem;
 	cursor: pointer;
+	white-space: nowrap;
 }
 .sized #canvasStart {
 	display: none;

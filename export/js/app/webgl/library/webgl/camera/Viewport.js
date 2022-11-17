@@ -5,27 +5,27 @@ document.exitPointerLock = document.exitPointerLock ||
 window.disablingPointerLock = false;
 class ViewportClass {
 	cameraPos = [
-		14.234128330979349,
-		5.903851021227274,
-		4.299881014884274
+		12.232431917267435,
+			5.687726473508779,
+			5.216216950296382
 	];
 	cameraFront = [
-		-0.8072117502578706,
-		-0.12013683883464858,
-		-0.5779068525294044
+		-0.6793095686370961,
+			-0.13744454603714829,
+			-0.7208658035464885
 	];
 	cameraUp = [0, 1, 0];
 
 	cameraSpeed = 0.1;
 	cameraSpeedToggles = [0.05, 0.1, 0.3];
-	mouseX = -1444;
-	mouseY = 69;
-	pitch = -6.900000000000086;
-	yaw = -144.40000000000143;
+	mouseX = -1333;
+	mouseY = 79;
+	pitch = -7.900000000000094;
+	yaw = -133.30000000000157;
 	direction = [
-		-0.8072117502578706,
-		-0.12013683883464858,
-		-0.5779068525294044
+		-0.6793095686370961,
+			-0.13744454603714829,
+			-0.7208658035464885
 	];
 
 	// Mouse sensitivity
@@ -264,18 +264,18 @@ const appDisplayKeys = {
 	six: document.querySelector('.key[data-value="6"]'),
 };
 let currentIndex = 1;
-function toggleSceneKey(index, newValue = true){
-	if(newValue) { 
+function toggleSceneKey(index, newValue = true) {
+	if (newValue) {
 		toggleSceneKey(currentIndex, false);
 		currentIndex = index;
 	}
 
-	if(index === 1) appDisplayKeys.one.classList.toggle('active', newValue);
-	else if(index === 2) appDisplayKeys.two.classList.toggle('active', newValue);
-	else if(index === 3) appDisplayKeys.three.classList.toggle('active', newValue);
-	else if(index === 4) appDisplayKeys.four.classList.toggle('active', newValue);
-	else if(index === 5) appDisplayKeys.five.classList.toggle('active', newValue);
-	else if(index === 6) appDisplayKeys.six.classList.toggle('active', newValue);
+	if (index === 1) appDisplayKeys.one.classList.toggle('active', newValue);
+	else if (index === 2) appDisplayKeys.two.classList.toggle('active', newValue);
+	else if (index === 3) appDisplayKeys.three.classList.toggle('active', newValue);
+	else if (index === 4) appDisplayKeys.four.classList.toggle('active', newValue);
+	else if (index === 5) appDisplayKeys.five.classList.toggle('active', newValue);
+	else if (index === 6) appDisplayKeys.six.classList.toggle('active', newValue);
 }
 toggleSceneKey(1);
 

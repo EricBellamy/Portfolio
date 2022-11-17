@@ -666,7 +666,6 @@ class KeyboardClass {
 }
 
 window.gameInitFunctions["varSetup1"].push(function () {
-	window.tired.resize.watch(2);
 	window.keyboard = new KeyboardClass();
 
 	keyboard.register({

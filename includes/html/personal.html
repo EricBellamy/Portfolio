@@ -4,14 +4,43 @@
 
 <include src="import/personal/webgl.html" />
 
+<include src="import/personal/telnetflix.html" />
+
 <include src="import/personal/halloween_show.html" />
 
 <include src="import/personal/halloween_points.html" />
+
+<include src="import/personal/snake_idle.html" />
 
 <!-- Telnetflix -->
 
 <!-- Snake -->
 
-<include src="import/personal/color_picker.html" />
-<include src="import/personal/snake_idle.html" />
-<include src="import/personal/chrome_extension.html" />
+<!-- <include src="import/personal/color_picker.html" /> -->
+<!-- <include src="import/personal/chrome_extension.html" /> -->
+
+<script>
+	// Personal iFrame scaling
+	const scaledFrames = document.querySelectorAll(".scaled-iframe-app");
+	function generateFrameScale() {
+		const windowHeight = window.innerHeight;
+		const scaledReference = 900;
+		if (windowHeight < scaledReference) {
+			const scaleRatio = scaledReference / windowHeight;
+
+			const existingStyle = document.querySelector("#iframeScaleStyle");
+			if (existingStyle) existingStyle.parentNode.removeChild(existingStyle);
+
+			document.body.appendChild(tired.html.create(`<style id="iframeScaleStyle">
+				.scaled-iframe-app iframe {
+					width: ${scaleRatio * 100}% !important;
+					height: ${scaleRatio * 100}% !important;
+					-webkit-transform: scale(${1 / scaleRatio});
+					transform: scale(${1 / scaleRatio});
+				}
+			</style>`));
+		}
+	}
+	generateFrameScale();
+	tired.resize.addEvent(generateFrameScale);
+</script>

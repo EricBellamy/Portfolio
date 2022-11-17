@@ -18,12 +18,6 @@
 	background: #000;
 	/* padding-bottom: 56.25%; */
 }
-#personal .app iframe {
-	display: flex;
-	width: 100%;
-	height: 99vh;
-	border: none;
-}
 #personal .app-container .title {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
@@ -32,4 +26,30 @@
 #personal .app-container .description {
 	opacity: 0.6;
 	line-height: 1.5;
+}
+
+#personal .app {
+	width: 100%;
+}
+
+#personal .app.iframe-app {
+	height: 99vh;
+}
+
+#personal .app iframe {
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+#personal .scaled-iframe-app {
+	position: relative;
+	height: 99vh;
+}
+#personal .scaled-iframe-app iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	-webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
 }
