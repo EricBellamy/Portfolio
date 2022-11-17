@@ -39,7 +39,9 @@ class BlockScroller {
 			this.active(diff);
 		}
 	}
+	CURRENT_SCROLL_PIXELS = -1;
 	active(scrollPixels) {
+		this.CURRENT_SCROLL_PIXELS = scrollPixels;
 		const professionalProgress = scrollPixels / this.ELEMENT_HEIGHT;
 		const professionalIndex = Math.min(professionalItems.length - 1, Math.floor(professionalProgress));
 
@@ -51,6 +53,9 @@ class BlockScroller {
 
 		window.BlockScrollEngine.program.updateProgress(scrollProgress);
 		window.BlockScrollEngine.program.draw();
+	}
+	lastActive(){
+		this.active(this.CURRENT_SCROLL_PIXELS);
 	}
 }
 
@@ -109,5 +114,10 @@ function initBlockScroller() {
 	// 	leading: true,
 	// 	maxWait: 1000 / 60
 	// }));
+
+	tired.resize.addEvent(function(){
+		window.BlockScrollEngine.program.use();
+		window.blockScroller.lastActive();
+	});
 }
 initBlockScroller();

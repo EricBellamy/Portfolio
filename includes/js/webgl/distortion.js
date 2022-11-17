@@ -36,6 +36,8 @@ WebGLDistortionScroller = function (input) {
 	this.onFirstRender = input.onFirstRender;
 
 	this.displacement = input.displacement;
+
+	if(input.mode) this.setModeVariables(...input.mode);
 };
 
 WebGLDistortionScroller.prototype =
@@ -212,6 +214,8 @@ WebGLDistortionScroller.prototype =
 			Math.max(0, scrolling / window.innerHeight)
 			, this.amountMax);
 
+		// console.log(this.scrollingElement);
+
 		return this._amountTarget;
 	},
 	shouldBeActive: function () {
@@ -232,12 +236,12 @@ WebGLDistortionScroller.prototype =
 		else return;
 
 		this._updateRenderVariables();
-		this._renderLogic();
+		this._renderLogic("_render");
 	},
 	_updateRenderVariables: function(){
 		this._updateScrollVariables();
 	},
-	_renderLogic: function () {
+	_renderLogic: function (source) {
 		const gl = this._gl;
 
 
@@ -247,12 +251,14 @@ WebGLDistortionScroller.prototype =
 		gl.uniform1f(this._cutoffLoc, this._cutOff * 1.25);
 		gl.uniform2f(this._amountLoc, this._amount * this.strengthX, this._amount * this.strengthY);
 
+		// console.log(source, this._cutOff, this._amount);
+
 
 		// Draws the textures
 		gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
 	},
 
-	changeMode: function(mode, color, scrollOffset, amountRealistic, amountMax){
+	setModeVariables: function(mode, color, scrollOffset, amountRealistic, amountMax){
 		this._cutOff = 0;
 		this._amount = 0;
 
@@ -262,10 +268,14 @@ WebGLDistortionScroller.prototype =
 
 		this.amountRealistic = amountRealistic;
 		this.amountMax = amountMax;
+	},
+
+	changeMode: function(mode, color, scrollOffset, amountRealistic, amountMax){
+		this.setModeVariables(mode, color, scrollOffset, amountRealistic, amountMax);
 
 		this._prepareRender();
 		this._updateRenderVariables();
-		this._renderLogic();
+		this._renderLogic("changeMode");
 		this.onFirstRender();
 	}
 };

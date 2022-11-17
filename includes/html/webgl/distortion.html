@@ -5,7 +5,6 @@
 <include src="webgl/distortion.js" />
 <script type="text/javascript">
 	function updateDistortionMode(mode) {
-
 		if (window.distortionScroller.mode != mode) {
 			switch (mode) {
 				case 0:
@@ -16,22 +15,28 @@
 						0.93,
 						0.95
 					);
-					introSection.classList.toggle("intro", true);
-					introSection.classList.toggle("outro", false);
 					break;
 				case 1:
-				const contactBounds = contactSection.getBoundingClientRect();
-				window.distortionScroller.changeMode(
-					1,
-					[0.06666666666666667, 0.06666666666666667, 0.06666666666666667],
-					window.scrollY + contactBounds.top - windowHeight * 0.75,
-					0.93,
-					0.95
-				);
-				introSection.classList.toggle("intro", false);
-				introSection.classList.toggle("outro", true);
+					const contactBounds = contactSection.getBoundingClientRect();
+					window.distortionScroller.changeMode(
+						1,
+						[0.06666666666666667, 0.06666666666666667, 0.06666666666666667],
+						window.scrollY + contactBounds.top - windowHeight * 0.75,
+						0.93,
+						0.95
+					);
 					break;
 			}
+		}
+		switch (mode) {
+			case 0:
+				introSection.classList.toggle("intro", true);
+				introSection.classList.toggle("outro", false);
+				break;
+			case 1:
+				introSection.classList.toggle("intro", false);
+				introSection.classList.toggle("outro", true);
+				break;
 		}
 	}
 
@@ -52,10 +57,10 @@
 			onPause: function () {
 				console.log("PAUSED DISTORTION!");
 				// Start the scroll listener for when we need to unpause the animation
-			}
+			},
+			mode: [0, [1, 1, 1], 0, 0.93, 0.95]
 		});
 		window.distortionScroller.init();
-
-		if (window.distortionScroller.mode != 1) updateDistortionMode(0);
+		// updateDistortionMode(0);
 	}
 </script>

@@ -32,6 +32,9 @@ const highPerformanceScroll = window.tired.debounce(function () {
 
 	pageSection = window.scrollManager.getCheckpointIndex(window.scrollY);
 
+	// console.log("LAST PAGE SECTION: " + LAST_PAGE_SECTION);
+	// console.log("THE PAGE SECTION: " + pageSection);
+
 	if (window.distortionScroller) {
 		switch (pageSection) {
 			case 0:
@@ -41,6 +44,7 @@ const highPerformanceScroll = window.tired.debounce(function () {
 						window.distortionScroller._cutOff = 1;
 					}
 
+					console.log("UPDATE DISTORTION MODE 0");
 					updateDistortionMode(0);
 
 					window.distortionScroller.start();
@@ -55,10 +59,11 @@ const highPerformanceScroll = window.tired.debounce(function () {
 				break;
 			case 1:
 				if (LAST_PAGE_SECTION != 1) {
+					console.log("1 :: UPDATING DISTORTION SCROLL");
 					window.distortionScroller._amount = 1;
 					window.distortionScroller._cutOff = 1;
 
-					window.distortionScroller._renderLogic();
+					window.distortionScroller._renderLogic("scroll.js-1");
 					window.distortionScroller.stop();
 
 					// Make sure the block scroller is showing
@@ -80,7 +85,7 @@ const highPerformanceScroll = window.tired.debounce(function () {
 
 						window.distortionScroller._amount = 0;
 						window.distortionScroller._cutOff = 0;
-						window.distortionScroller._renderLogic();
+						window.distortionScroller._renderLogic("scroll.js-2");
 					}
 
 					window.distortionScroller.start();
@@ -97,13 +102,14 @@ const highPerformanceScroll = window.tired.debounce(function () {
 				// window.distortionScroller.start();
 
 				if (LAST_PAGE_SECTION === -1) {
+					console.log("UPDATE DISTORTION MODE 3");
 					updateDistortionMode(1);
 
 					window.distortionScroller._amount = 1;
 					window.distortionScroller._cutOff = 1;
 					window.BlockScrollEngine.hide();
 
-					window.distortionScroller._renderLogic();
+					window.distortionScroller._renderLogic("scroll.js-3");
 					window.distortionScroller.start();
 				}
 
